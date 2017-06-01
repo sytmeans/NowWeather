@@ -39,7 +39,7 @@ public class Suggestion {
         this.sport = sport;
     }
 
-    private class Comfort {
+    public class Comfort {
         @SerializedName("txt")
         private String comfortInfo;
 
@@ -52,7 +52,7 @@ public class Suggestion {
         }
     }
 
-    private class CarWash {
+    public class CarWash {
         @SerializedName("txt")
         private String carWashInfo;
 
@@ -65,7 +65,7 @@ public class Suggestion {
         }
     }
 
-    private class Sport {
+    public class Sport {
         @SerializedName("txt")
         private String SportInfo;
 

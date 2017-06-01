@@ -3,4 +3,11 @@
     <color name="colorPrimary">#5399fa</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="lightBackground">#56b8f9</color>
+    <color name="mainWeatherTextColor">#2b37df</color>
+    <color name="textColor">#FFFFFFFF</color>
+
+
+    <color name="white">#ffffff</color>
+
 </resources>
