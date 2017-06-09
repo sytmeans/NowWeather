@@ -7,6 +7,10 @@
     <color name="mainWeatherTextColor">#2b37df</color>
     <color name="textColor">#FFFFFFFF</color>
 
+    <color name="blue">#3e81fc</color>
+    <color name="orange">#e96d08</color>
+    <color name="red">#ef1a0b</color>
+
 
     <color name="white">#ffffff</color>
 

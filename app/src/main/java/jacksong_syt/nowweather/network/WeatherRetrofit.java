@@ -11,10 +11,10 @@ import retrofit.Retrofit;
  */
 
 public class WeatherRetrofit {
-    public static final String BASE_URL = "https://free-api.heweather.com/";
+    public static final String BASE_URL = "https://free-api.heweather.com/v5/";
     public static final String APP_KEY = "48b2162a12174baa810542caec986429";
 
-    private static WeatcherClient client;
+    private static WeatherClient client;
     private static Retrofit retrofit;
 
     static {
@@ -24,9 +24,9 @@ public class WeatherRetrofit {
                 .build();
     }
 
-    public WeatcherClient getClient() {
+    public WeatherClient getClient() {
         if (client == null) {
-            client = retrofit.create(WeatcherClient.class);
+            client = retrofit.create(WeatherClient.class);
         }
         return client;
     }

@@ -1,15 +1,12 @@
 package jacksong_syt.nowweather.presenter;
 
+import android.util.Log;
+
 import com.hannesdorfmann.mosby.mvp.MvpBasePresenter;
 
-import jacksong_syt.nowweather.bean.AQI;
-import jacksong_syt.nowweather.bean.Basic;
-import jacksong_syt.nowweather.bean.Forecast;
-import jacksong_syt.nowweather.bean.Now;
-import jacksong_syt.nowweather.bean.Suggestion;
 import jacksong_syt.nowweather.bean.Weather;
 import jacksong_syt.nowweather.iview.IMainInfoView;
-import jacksong_syt.nowweather.network.WeatcherClient;
+import jacksong_syt.nowweather.network.WeatherClient;
 import jacksong_syt.nowweather.network.WeatherRetrofit;
 import retrofit.Call;
 import retrofit.Callback;
@@ -31,69 +28,35 @@ public class MainPresenter extends MvpBasePresenter<IMainInfoView> {
         final IMainInfoView view = getView();
         if (view != null) {
             WeatherRetrofit retrofit = new WeatherRetrofit();
-            WeatcherClient client = retrofit.getClient();
-            final Call<Weather> call = client.getFeed("北京", APP_KEY);
+            WeatherClient client = retrofit.getClient();
+            final Call<Weather> call = client.getFeed(cityName, APP_KEY);
             call.enqueue(new Callback<Weather>() {
                 @Override
                 public void onResponse(Response<Weather> response, Retrofit retrofit) {
+                    Log.e("onResponse:------> ",response.body().toString());
 
                     Weather weather = response.body();
-
-                    Basic basic = weather.getBasic();
-                    Basic.Update update = basic.getUpdate();
-
-                    AQI aqi = weather.getAqi();
-                    AQI.AQICity aqiCity = aqi.getCity();
-
-
-                    Now now = weather.getNow();
-                    Now.More nowMore = now.getMore();
-
-
-                    Suggestion suggestion = weather.getSuggestion();
-                    Suggestion.Comfort comfort = suggestion.getComfort();
-                    Suggestion.CarWash carWash = suggestion.getCarWash();
-                    Suggestion.Sport sport = suggestion.getSport();
-
-                    //Forecast forecast =weather.getForecastList();
-
-                    for (int i = 0; i < weather.getForecastList().size(); i++) {
-                        Forecast forecast = weather.getForecastList().get(i);
-                        view.setForecastInfo(forecast);
-
-                        Forecast.More forecastMore = forecast.getMore();
-                        view.setForecastMoreInfo(forecastMore);
-                        Forecast.Temperature temperature = forecast.getTemperature();
-                        view.setTemperatureInfo(temperature);
-                    }
-
-                    view.getWeatherInfo(cityName);
-
-                    view.setBasicInfo(basic);
-                    view.setUpdateInfo(update);
-
-                    view.setAQIInfo(aqi);
-                    view.setAQICityInfo(aqiCity);
-
-                    view.setNowInfo(now);
-                    view.setNowMoreInfo(nowMore);
-
-                    view.setSuggetsionInfo(suggestion);
-                    view.setComfortInfo(comfort);
-                    view.setCarWashInfo(carWash);
-                    view.setSportInfo(sport);
+                    Log.e("onResponse:body===",weather.toString());
 
 
 
 
+                    view.getWeatherInfo(weather);
+                    view.getAqi(weather.getHeWeather5().get(0).getAqi());
+                    view.getLocation(weather.getHeWeather5().get(0).getBasic());
+                    view.getDetailInfo(weather.getHeWeather5().get(0).getDaily_forecast().get(0));
+                    view.getHourlyInfo(weather.getHeWeather5().get(0).getHourly_forecast().get(0));
 
                 }
 
                 @Override
                 public void onFailure(Throwable t) {
 
+
                 }
             });
+        }else {
+            Log.e("View", "== null ");
         }
     }
 
